@@ -3,8 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-login_id = '<assessor-id>'
-username = '<username>'
+login_id = '811113'
+username = 'brebecchi'
 password = getpass.getpass()
 
 series = 'June 2023'
@@ -12,7 +12,7 @@ centre_number = input('Centre number: ')
 
 # Replace username with your username and make sure to create the OCR_JUNE_2023 directory
 # Alternatively just replace the whole path with one of your preference
-download_directory = f'/Users/<pc-username>/Documents/OCR_JUNE_2023/{centre_number}'
+download_directory = f'/Users/thebillington/Documents/OCR_JUNE_2023/{centre_number}'
 if not os.path.exists(download_directory):
    os.makedirs(download_directory)
 
@@ -25,6 +25,7 @@ chrome_options.add_experimental_option('prefs', prefs)
 # https://chromedriver.chromium.org/downloads
 chrome_driver_service = Service('chromedriver_mac_arm64/chromedriver')
 driver = webdriver.Chrome(service=chrome_driver_service, options=chrome_options)
+driver.set_page_load_timeout(1800)
 
 driver.get('https://repository.ocr.org.uk/CentresOverview.aspx')
 
@@ -59,13 +60,11 @@ for i in range(1, len(cells), 4):
 
 for candidate in candidates:
     print(f"Fetching work for Candidate: {candidate}")
-    try:
-        driver.find_element(By.LINK_TEXT, candidate).click()
+    
+    driver.find_element(By.LINK_TEXT, candidate).click()
 
-        driver.find_element('xpath', '//input[@value="allSelectRadioButton"]').click()
-        driver.find_element('xpath', '//input[@value="Download"]').click()
-    except:
-        print("Couldn't fetch candidate. Download manually later.")
+    driver.find_element('xpath', '//input[@value="allSelectRadioButton"]').click()
+    driver.find_element('xpath', '//input[@value="Download"]').click()
 
     driver.back()
 
