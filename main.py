@@ -59,10 +59,13 @@ for i in range(1, len(cells), 4):
 
 for candidate in candidates:
     print(f"Fetching work for Candidate: {candidate}")
-    driver.find_element(By.LINK_TEXT, candidate).click()
+    try:
+        driver.find_element(By.LINK_TEXT, candidate).click()
 
-    driver.find_element('xpath', '//input[@value="allSelectRadioButton"]').click()
-    driver.find_element('xpath', '//input[@value="Download"]').click()
+        driver.find_element('xpath', '//input[@value="allSelectRadioButton"]').click()
+        driver.find_element('xpath', '//input[@value="Download"]').click()
+    except:
+        print("Couldn't fetch candidate. Download manually later.")
 
     driver.back()
 

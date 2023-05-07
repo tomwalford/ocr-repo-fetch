@@ -2,7 +2,7 @@
 
 This is a web scraper built using Selenium, designed to automatically fetch all candidate work from a given centre so that you don't have to download and extract everything individually.
 
-Getting work from OCR Repository can be a painful experience because of the wait times as the Server prepares your download, so this scrip is designed to be set and forget.
+Getting work from OCR Repository can be a painful experience because of the wait times as the Server prepares your download, so this script is designed to be set and forget.
 
 The script takes a really long time to run (upwards of an hour if you are getting work for 15 candidates who all have lengthy videos) so be patient and go get a cup of tea.
 
