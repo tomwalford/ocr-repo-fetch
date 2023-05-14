@@ -1,18 +1,20 @@
-import os, zipfile, getpass
+import os, zipfile, configparser
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-login_id = '811113'
-username = 'brebecchi'
-password = getpass.getpass()
+config = configparser.ConfigParser()
+config.read('env.ini')
 
-series = 'June 2023'
-centre_number = input('Centre number: ')
+assessor_id = config.get('credentials', 'assessor_id')
+username = config.get('credentials', 'username')
+password = config.get('credentials', 'password')
 
-# Replace username with your username and make sure to create the OCR_JUNE_2023 directory
-# Alternatively just replace the whole path with one of your preference
-download_directory = f'/Users/thebillington/Documents/OCR_JUNE_2023/{centre_number}'
+series = config.get('repository', 'series')
+centre_number = config.get('repository', 'centre')
+
+download_directory = config.get('local', 'download_directory') + centre_number
+print(download_directory)
 if not os.path.exists(download_directory):
    os.makedirs(download_directory)
 
@@ -20,16 +22,14 @@ chrome_options = webdriver.ChromeOptions()
 prefs = {'download.default_directory' : download_directory}
 chrome_options.add_experimental_option('prefs', prefs)
 
-# Replace this path with a path to your chosen driver
-# The path you can see here references the M1 Mac Chrome Driver within this repo
-# https://chromedriver.chromium.org/downloads
-chrome_driver_service = Service('chromedriver_mac_arm64/chromedriver')
+driver_path = config.get('local', 'driver')
+chrome_driver_service = Service(driver_path)
 driver = webdriver.Chrome(service=chrome_driver_service, options=chrome_options)
 driver.set_page_load_timeout(1800)
 
 driver.get('https://repository.ocr.org.uk/CentresOverview.aspx')
 
-driver.find_element(By.CLASS_NAME, 'LoginId').send_keys(login_id)
+driver.find_element(By.CLASS_NAME, 'LoginId').send_keys(assessor_id)
 driver.find_element(By.CLASS_NAME, 'Username').send_keys(username)
 driver.find_element(By.CLASS_NAME, 'Password').send_keys(password)
 
