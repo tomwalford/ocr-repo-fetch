@@ -24,12 +24,9 @@ The script only requires selenium beyond the standard python libraries:
 
 Find Chrome drivers here: https://chromedriver.chromium.org/downloads
 
-### Replace placeholders with your details
+### Updating the `ini` file
 
-1. *Line 7*: `login_id = '<assessor-id>'` - Replace with your assessor id
-2. *Line 8*: `username = '<username>'` - Replace with your username
-3. *Line 15*: `download_directory = f'/Users/<pc-username>/Documents/OCR_JUNE_2023/{centre_number}'` - Replace the path with your chosen Download directory
-4. *Line 26*: `chrome_driver_service = Service('chromedriver_mac_arm64/chromedriver')` - Replace with the path to your chosen driver (notice that this path is relative, not absolute, as I have included the M1 Mac ARM Driver for Chrome in this repository)
+You will need to make a copy of the `env.example.ini` file and save it as `env.ini`. Note that this is excluded from the repository to preserve privacy of fields.
 
 ### Alleviating timeouts
 
