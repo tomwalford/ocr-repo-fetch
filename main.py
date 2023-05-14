@@ -14,7 +14,6 @@ series = config.get('repository', 'series')
 centre_number = config.get('repository', 'centre')
 
 download_directory = config.get('local', 'download_directory') + centre_number
-print(download_directory)
 if not os.path.exists(download_directory):
    os.makedirs(download_directory)
 
@@ -56,10 +55,11 @@ driver.find_element(By.LINK_TEXT, centre_number).click()
 candidates = []
 cells = driver.find_elements(By.TAG_NAME, 'td')
 for i in range(1, len(cells), 4):
+    if cells[i].text == "": continue
     candidates.append(cells[i].text)
 
-for candidate in candidates:
-    print(f"Fetching work for Candidate: {candidate}")
+for i, candidate in enumerate(candidates):
+    print(f"Fetching work for Candidate: {candidate} ({i+1}/{len(candidates)})")
     
     driver.find_element(By.LINK_TEXT, candidate).click()
 
