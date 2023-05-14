@@ -70,8 +70,7 @@ for i, candidate in enumerate(candidates):
 
 input("Press any key to continue (once downloads have all finished)...")
 
-i = 0
-for item in os.listdir(download_directory):
+for i, item in enumerate(os.listdir(download_directory)):
     if item.endswith('.zip'):
         folder_name = download_directory + f'/{item}'
 
@@ -93,5 +92,3 @@ for item in os.listdir(download_directory):
                 zip_ref.extractall(candidate_directory)
                 zip_ref.close()
                 os.remove(folder_name)
-
-        i += 1
