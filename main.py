@@ -11,8 +11,9 @@ username = config.get('credentials', 'username')
 password = config.get('credentials', 'password')
 
 series = config.get('repository', 'series')
-centre_number = config.get('repository', 'centre')
+#centre_number = config.get('repository', 'centre')
 
+centre_number = input("Enter centre number: ")
 download_directory = config.get('local', 'download_directory') + centre_number
 if not os.path.exists(download_directory):
    os.makedirs(download_directory)
