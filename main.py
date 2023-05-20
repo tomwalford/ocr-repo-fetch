@@ -11,9 +11,9 @@ username = config.get('credentials', 'username')
 password = config.get('credentials', 'password')
 
 series = config.get('repository', 'series')
-#centre_number = config.get('repository', 'centre')
+centre_number = config.get('repository', 'centre')
+centre_number = input('Enter centre number: ')
 
-centre_number = input("Enter centre number: ")
 download_directory = config.get('local', 'download_directory') + centre_number
 if not os.path.exists(download_directory):
    os.makedirs(download_directory)
@@ -60,15 +60,21 @@ for i in range(1, len(cells), 4):
     candidates.append(cells[i].text)
 
 for i, candidate in enumerate(candidates):
+    
+
     print(f"Fetching work for Candidate: {candidate} ({i+1}/{len(candidates)})")
     
-    driver.find_element(By.LINK_TEXT, candidate).click()
+    try:    
+        driver.find_element(By.LINK_TEXT, candidate).click()
+    
+        driver.find_element('xpath', '//input[@value="allSelectRadioButton"]').click()
+        driver.find_element('xpath', '//input[@value="Download"]').click()
 
-    driver.find_element('xpath', '//input[@value="allSelectRadioButton"]').click()
-    driver.find_element('xpath', '//input[@value="Download"]').click()
-
-    driver.back()
-
+        driver.back()
+    except:
+        print(f"Cannot fetch work for Candidate {candidate}")
+        driver.back()
+        
 input("Press any key to continue (once downloads have all finished)...")
 
 for i, item in enumerate(os.listdir(download_directory)):
